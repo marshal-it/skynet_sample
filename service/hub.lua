@@ -33,6 +33,7 @@ function new_socket(fd, addr)
 	data.socket[fd] = nil
 end
 
+--由main.lua通过skynet.call调用过来的函数接口
 function hub.open(ip, port)
 	log("Listen %s:%d", ip, port)
 	assert(data.fd == nil, "Already open")
@@ -50,6 +51,7 @@ function hub.close()
 	data.port = nil
 end
 
+--hub服务初始化，并且传入相关命令和数据到skynet底层进行注册，同时请求启动“auth”和“manager”
 service.init {
 	command = hub,
 	info = data,
